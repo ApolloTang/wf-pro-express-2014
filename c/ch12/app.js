@@ -3,15 +3,26 @@ var app = express();
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
+const Redis = require('ioredis');
+
+const redisOptions = {
+  host: 'localhost',
+  port: 6379,
+  // password: 'nopassword'
+  // keyPrefix: 'myredis'
+}
+
+const redisClient = new Redis(redisOptions)
 
 app.use(cookieParser());
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  store: new RedisStore({
-    host: 'localhost',
-    port: 6379
-  }),
+  store: new RedisStore({ client: redisClient }),
+  // store: new RedisStore({
+  //   host: 'localhost',
+  //   port: 6379
+  // }),
   secret: '0FFD9D8D-78F1-4A30-9A4E-0940ADE81645',
   cookie: { path: '/', maxAge: 3600000 }
 }));
