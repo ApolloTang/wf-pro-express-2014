@@ -18,13 +18,14 @@ app.use(cookieParser());
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  store: new RedisStore({ client: redisClient }),
-  // store: new RedisStore({
-  //   host: 'localhost',
-  //   port: 6379
-  // }),
+  store: new RedisStore({
+    client: redisClient
+  }),
   secret: '0FFD9D8D-78F1-4A30-9A4E-0940ADE81645',
-  cookie: { path: '/', maxAge: 3600000 }
+  cookie: {
+    path: '/',
+    maxAge: 3600000,
+  }
 }));
 
 app.get('/', function(request, response){
