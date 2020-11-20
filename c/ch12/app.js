@@ -31,8 +31,12 @@ app.use(cookieParser());
 app.use(session(sessionOptions));
 
 app.get('/', function(request, response){
+  const timeStamp = Date.now()
+  console.log('---------------------------------------------------', timeStamp)
   console.log('Session ID: ', request.sessionID)
-  console.log('Cookie: ', request.cookies)
+  // console.log('Cookie: ', request.cookies)
+  // console.log('Session in redis: ', request.session)
+
 
   if (request.session.counter) {
     request.session.counter=request.session.counter +1;
@@ -40,6 +44,7 @@ app.get('/', function(request, response){
     request.session.counter = 1;
   }
   response.send('Counter: ' + request.session.counter)
+  console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', timeStamp)
 });
 
 app.listen(3000);
